@@ -99,10 +99,9 @@ export default StyleSheet.create({
         padding:5
     },
     containerm:{
-        flexDirection:'row',
         flex:1,
         alignItems:'center',
-        justifyContent:'space-between'
+        justifyContent:'flex-start'
     },
     containern:{
         flexDirection:'row',

@@ -20,51 +20,88 @@ import MoreItemInfo from './components/MoreItemInfo'
 import store from './data_Container/store'
 import lib from './lib/lib'
 import Root from './components/navigator/Navigation'
+import { Font } from 'expo'
+import * as Animatable from 'react-native-animatable'
 //import New from './components/ShopContainer'
-//import New from './components/pay'
+//import New from './components/Pay'
 //import New from './components/ChefAndMenu'
-//import New from './components/MoreItemInfo'
-//import New from './components/ProceedToCheckOut'
+//import PaymentAndOrder from './components/newComponents/PaymentAndOrder'
+import New from './components/ProceedToCheckOut'
 //import New from './components/Chef'
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator
+} from 'react-native-indicators'
+import SplashScreen from './components/newComponents/SplashScreen'
+import RestaurantAndCuisine from './components/newComponents/RestaurantAndCuisine'
+import CategoriesAndMenu from './components/newComponents/CategoriesAndMenu'
+import Search from './components/newComponents/Search'
+//import New from './components/newComponents/MoreItemInfo'
+import Locate from './components/newComponents/Locate'
+
 
 export default class App extends React.Component {
   constructor(props){
     super(props)
-    this.state={
-      displayInputLabel:false,
-      email:'',
-      password:'',
-      repeatPassword:'',
-      firstName:'',
-      lastName:'',
-      mobile:'',
-      page:false
+    this.state = {
+      fontLoaded: false,
     }
-    this.NavigatePage=this.NavigatePage.bind(this)
-    this.onSignUp=this.onSignUp.bind(this)
   }
-NavigatePage(){
-  this.setState((prevState)=>({page:!prevState.page}))
-}
-onSignUp(){
-  let signUpDetails={
-    email:this.state.email,
-    firstName:this.state.firstName,
-    lastName:this.state.lastName,
-    password:this.state.password,
-    mobile:this.state.mobile,
-    isCustomer:true,
-    isChef:false
-  }
-  console.log(signUpDetails)
-  lib.signup(signUpDetails)
-}
 
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Comfortaa-Bold': require('./assets/fonts/Comfortaa-Bold.ttf'),
+      'Comfortaa-Light': require('./assets/fonts/Comfortaa-Light.ttf'),
+      'Comfortaa-Regular': require('./assets/fonts/Comfortaa-Regular.ttf')
+    })
+    this.setState({ fontLoaded: true })
+  }
   
   render() {
     return (
-      <Root store={store}/>
+      //(this.state.fontLoaded)?
+      //<Root store={store}/>:
+     // null
       //<New store={store} />
+      //<SplashScreen/>
+      
+      //<RestaurantAndCuisine/>:
+      //<CategoriesAndMenu/>:
+      /*<New  navigation ={ {state:{params:{
+            imgsrc:'https://res.cloudinary.com/bukka/image/upload/v1459089132/chefmenu/custom:1459088741794bees/menufxone/menu.jpg',
+            foodPrice:500,
+            cuisine:'Continental',
+            foodName:'Rice and Beans',
+            evnt:()=>console.log('hey!!')
+      }}}}
+      screenProps={{store:{cart:{cart:{}}}}}/>:*/
+      (this.state.fontLoaded)?
+      //<PaymentAndOrder/>:
+      /*<New screenProps={{
+        cart:{
+          cart:{'Rice and Beans':{
+                                price:3500,
+                                cuisine:'continental',
+                                quantity:5
+                              }}},
+        chef:{
+          yourChef:{
+            cuisine:'continental'
+          }
+        }
+    }} />:*/
+      //<Search/>:
+      //<RestaurantAndCuisine/>:
+      <Locate/>:
+      null
     );
   }
 }

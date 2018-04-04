@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput } from 'react-native';
+import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput,StyleSheet } from 'react-native';
 import styles,{colors} from '../styles/style'
 import Inputs from './Inputs'
 import propTypes from 'prop-types'
@@ -7,7 +7,7 @@ import Button from './Button'
 import storage from '../data_Container/store'
 import Img from './Images'
 import lib from '../lib/lib'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/Entypo'
 import CommonContainer from './CommonContainer'
 import rsc from '../lib/resources'
 import Card from './Card'
@@ -28,7 +28,8 @@ class ProceedToCheckOut extends Component{
     constructor(props){
         super(props)
         this.state={
-            deliveryInfo:''
+            deliveryInfo:'',
+            moveUp:false
         }
         this.proceed=this.proceed.bind(this)
     }
@@ -53,35 +54,45 @@ class ProceedToCheckOut extends Component{
                 }
 
                 </ScrollView>
-                <View style={{flex:1,paddingTop:10,paddingBottom:10}}>
+                <View style={[{paddingTop:10,paddingBottom:10},this.state.moveUp?{flex:2}:{flex:1}]}>
                     <View style={{flex:1,justifyContent:'center'}}>
-                        <Text style={{fontWeight:'700',marginBottom:5}}>Delivery Tips</Text>
-                        <TextInput placeholder={'Add note(flat no,room no. etc)'} onChangeText={(deliveryInfo)=>this.setState({deliveryInfo})} style={{borderWidth:1,borderColor:'rgba(0,0,0,.1)',flex:.5,padding:5,borderRadius:5}}></TextInput>
+                        <Text style={[{fontWeight:'700',marginBottom:5},myStyles.myTexta]}>Delivery Tips</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <TextInput  placeholder={'Add note(flat no,room no. etc)'} 
+                                        onChangeText={(deliveryInfo)=>this.setState({deliveryInfo})} 
+                                        style={[{borderWidth:1,borderColor:'rgba(0,0,0,.1)',padding:5,borderRadius:5,flex:1},myStyles.myText]}
+                                        onFocus = {()=>this.setState({moveUp:true})}
+                                        onBlur = {()=>this.setState({moveUp:false})}
+                                        ></TextInput>
+                            <TouchableOpacity style={{justifyContent:'center',alignItems:'center',width:20}}>
+                                <Icon name="location-pin" size={24} color="#900"/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={{flex:1,justifyContent:'center',paddingLeft:50,paddingRight:50}}>
                         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                            <Text style={{fontSize:12,color:'rgba(0,0,0,.2)'}}>SUBTOTAL:</Text>
-                            <Text style={{fontSize:12,color:'rgba(0,0,0,.2)'}}>{cart.total}</Text>
+                            <Text style={[myStyles.myText,{fontSize:12,color:'rgba(0,0,0,.2)'}]}>SUBTOTAL:</Text>
+                            <Text style={[myStyles.myText,{fontSize:12,color:'rgba(0,0,0,.2)'}]}>{cart.total}</Text>
                         </View>
                         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                            <Text style={{fontSize:12,color:'rgba(0,0,0,.2)'}}>DISCOUNT:</Text>
-                            <Text style={{fontSize:12,color:'rgba(0,0,0,.2)'}}>₦000</Text>
+                            <Text style={[myStyles.myText,{fontSize:12,color:'rgba(0,0,0,.2)'}]}>DISCOUNT:</Text>
+                            <Text style={[myStyles.myText,{fontSize:12,color:'rgba(0,0,0,.2)'}]}>₦000</Text>
                         </View>
                         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
-                            <Text style={{fontSize:18,color:'#900'}}>TOTAL</Text>
-                            <Text style={{fontSize:18,color:'#900'}}>₦{cart.total}</Text>
+                            <Text style={[myStyles.myTexta,{fontSize:18,color:'#900'}]}>TOTAL</Text>
+                            <Text style={[myStyles.myTexta,{fontSize:18,color:'#900'}]}>₦{cart.total}</Text>
                         </View>
                         <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
-                            <Text style={{fontSize:18,color:'#fff'}}>TOTAL</Text>
+                            <Text style={[{fontSize:18,color:'#fff'},myStyles.myTexta]}>TOTAL</Text>
                             <Text style={{fontSize:18,color:'#fff'}}>00000</Text>
                         </View>
                     </View>
                     <View style={{flex:.5,justifyContent:'flex-start',alignItems:'center'}}>
                         <Button text="Proceed To Checkout"
-                                textColor={[{color:'#fff'}]}
+                                textColor={[{color:'#fff'},myStyles.myTexta]}
                                 event={this.proceed}
-                                button={[{backgroundColor:'#5CBC5C',width:175,height:35,borderRadius:5,display:'flex',justifyContent:'center',alignItems:'center',margin:0,shadowColor:'#000000',shadowRadius: 5,
-                                shadowOpacity: .5,shadowOffset: {
+                                button={[{backgroundColor:colors.a,width:175,height:35,borderRadius:5,display:'flex',justifyContent:'center',alignItems:'center',margin:0,shadowColor:'#000000',shadowRadius: 5,
+                                shadowOpacity: .1,shadowOffset: {
                                     width: 0,
                                     height: 1
                                 }}]}/>
@@ -98,3 +109,14 @@ export default ProceedToCheckOut
 ProceedToCheckOut.propTypes={
     screenProps:propTypes.object.isRequired
 }
+
+const myStyles=StyleSheet.create({
+    myText:{
+        fontFamily:'Comfortaa-Regular',
+        fontSize:14
+    },
+    myTexta:{
+        fontFamily:'Comfortaa-Bold',
+        fontSize:14
+    }
+})

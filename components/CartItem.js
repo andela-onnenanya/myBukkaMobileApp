@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput } from 'react-native';
+import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput,StyleSheet } from 'react-native';
 import styles,{colors} from '../styles/style'
 import Inputs from './Inputs'
 import propTypes from 'prop-types'
@@ -8,6 +8,7 @@ import storage from '../data_Container/store'
 import Img from './Images'
 import lib from '../lib/lib'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icono from 'react-native-vector-icons/Ionicons'
 import CommonContainer from './CommonContainer'
 import rsc from '../lib/resources'
 import Card from './Card'
@@ -27,9 +28,11 @@ class CartItem extends Component{
     constructor(props){
         super(props)
         this.state={
-            quantity:this.props.quantity||1
+            quantity:this.props.quantity||1,
+            animate:false
         }
         this.add=this.add.bind(this)
+        this.deleteDiv=this.deleteDiv.bind(this)
         this.subtract=this.subtract.bind(this)
         this.quantityUpdate=this.quantityUpdate.bind(this)
     }
@@ -46,7 +49,8 @@ class CartItem extends Component{
     }
 
     deleteDiv=(e)=>{
-		lib.deleteCart(e.currentTarget.dataset.key)
+        //lib.deleteCart(e.currentTarget.dataset.key)
+        this.setState({animate:true})
 	}
 
 	quantityUpdate=(value,key)=> {
@@ -59,24 +63,33 @@ class CartItem extends Component{
 
     render(){
         return(
-            <View style={[{height:Dimensions.get('window').height/10,borderBottomWidth:.5,borderBottomColor:'rgba(0,0,0,.1)',justifyContent:'center'},{...this.props.style}]}>
+            <Animatable.View animation={this.state.animate? "fadeOutLeftBig":''} style={[{height:Dimensions.get('window').height/10,borderBottomWidth:.5,borderBottomColor:'rgba(0,0,0,.1)',justifyContent:'center'},{...this.props.style},{flexDirection:'row'}]}>
+            <View style={{flex:1,justifyContent:'center'}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Text style={{color:'#900'}}>{this.props.foodname}</Text>
-                    <Text style={{color:'#900'}}>₦{this.props.price}</Text>
+                    <Text style={{color:'#900',fontFamily:'Comfortaa-Bold',fontSize:16}}>{this.props.foodname}</Text>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginRight:10}}>
+                        <Text style={{color:'#900',fontFamily:'Comfortaa-Bold',fontSize:16}}>₦{this.props.price}</Text>
+                    </View>
                 </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                    <Text style={{color:'rgba(0,0,0,.1)'}}>{this.props.cuisine}</Text>
+                    <Text style={{color:'rgba(0,0,0,.1)',fontFamily:'Comfortaa-Regular',fontSize:14}}>{this.props.cuisine}</Text>
                     <View  style={styles.containern}>
-                        <TouchableOpacity onPress={this.add}>
-                            <Icon name="add" size={12} color="#900"  />
+                        <TouchableOpacity onPress={this.add} style={[mystyle.mySmallButton]}>
+                            <Icon name="add" size={14} color="#900"  />
                         </TouchableOpacity>
                         <Text style={styles.textd} >{this.state.quantity}</Text>
-                        <TouchableOpacity onPress={this.subtract}>
+                        <TouchableOpacity onPress={this.subtract} style={[mystyle.mySmallButton]}>
                             <Icon name="remove" size={12} color="#900"/>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
+            <View style={[{marginLeft:10,justifyContent:'center',alignItems:'center'}]}>
+                <TouchableOpacity style={[mystyle.mySmallButton,{justifyContent:'center',borderColor:'transparent',backgroundColor:'rgba(0,0,0,.05)'}]} onPress={this.deleteDiv}>
+                    <Icono name="md-close" size={14} color='rgba(0,0,0,.5)'  />
+                </TouchableOpacity>
+            </View>
+            </Animatable.View>
         )
     }
 }
@@ -90,3 +103,14 @@ CartItem.propTypes={
     quantity:propTypes.number.isRequired
 }
 
+const mystyle=StyleSheet.create({
+    mySmallButton:{
+        borderWidth:StyleSheet.hairlineWidth,
+        borderColor:colors.a,
+        width:20,
+        height:20,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:10
+    }
+})

@@ -81,7 +81,7 @@ export default class SignIn extends Component{
                         //style={{width:50,height:13}}
                         onPress={()=>this.setState((prevState)=>({switchScreen:!prevState.switchScreen}))}
                         >
-                        <Text style={{paddingLeft:5,color:'rgba(255, 255, 255,1)',textAlign:'right',color:'#F69322'}}>
+                        <Text style={{paddingLeft:5,color:'rgba(255, 255, 255,1)',textAlign:'right',color:'#F69322',fontFamily:'Varela Round'}}>
                             {(this.state.switchScreen)? 'Sign In?':'Forgot Password?'}
                         </Text>
                     </TouchableOpacity>
@@ -90,7 +90,7 @@ export default class SignIn extends Component{
                 {
                     (this.state.switchScreen)?
                     <Button text="Send"
-                            textColor={[{color:colors.a}]}
+                            textColor={[{color:colors.a,fontFamily:'Varela Round'}]}
                             event={this.onSend}
                             button={[{backgroundColor:'#fff',borderRadius:5, display:'flex',justifyContent:'center',alignItems:'center',padding:0,margin:0,shadowColor:'#000000',shadowRadius: 5,
                             shadowOpacity: .5,shadowOffset: {
@@ -99,7 +99,7 @@ export default class SignIn extends Component{
                             }},styles.button__Widec,styles.button__Long]}/>:
                     (this.props.screenProps.user.fetching && !this.props.screenProps.user.isAuthenticated)?
                     <Button text="Please wait.."
-                            textColor={[{color:colors.a}]}
+                            textColor={[{color:colors.a,fontFamily:'Varela Round'}]}
                             event={()=>console.log('signing in')}
                             button={[{backgroundColor:'#fff',borderRadius:5, display:'flex',justifyContent:'center',alignItems:'center',padding:0,margin:0,shadowColor:'#000000',shadowRadius: 5,
                             shadowOpacity: .5,shadowOffset: {
@@ -107,7 +107,7 @@ export default class SignIn extends Component{
                                 height: 1
                             }},styles.button__Widec,styles.button__Long]}/>:
                     <Button text="Sign In"
-                            textColor={[{color:colors.a}]}
+                            textColor={[{color:colors.a,fontFamily:'Varela Round'}]}
                             event={this.onLogin}
                             button={[{backgroundColor:'#fff',borderRadius:5, display:'flex',justifyContent:'center',alignItems:'center',padding:0,margin:0,shadowColor:'#000000',shadowRadius: 5,
                             shadowOpacity: .5,shadowOffset: {
@@ -118,12 +118,12 @@ export default class SignIn extends Component{
             </View>
             <View style={{flex:1}}>
                 <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{color:'rgba(255, 255, 255,.6)'}}>
+                    <Text style={{color:'rgba(255, 255, 255,.6)',fontFamily:'Varela Round'}}>
                         Don't have an Account? 
                         <TouchableOpacity
                             style={{width:75,height:13}}
                             onPress={() => this.props.navigation.navigate('signup')}>
-                            <Text style={{paddingLeft:5,color:'rgba(255, 255, 255,1)',fontWeight: 'bold'}}>
+                            <Text style={{paddingLeft:5,color:'rgba(255, 255, 255,1)',fontFamily:'Varela Round',fontWeight: 'bold'}}>
                                 Register
                             </Text>
                         </TouchableOpacity>
