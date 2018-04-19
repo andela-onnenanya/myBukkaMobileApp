@@ -18,6 +18,7 @@ export default class Map extends React.Component {
              address:'', 
              loadtimes:0        
         }
+        console.log(props)
         this.onRegChange = this.onRegChange.bind(this)
         this.getAddress = this.getAddress.bind(this)
     }
@@ -56,11 +57,6 @@ export default class Map extends React.Component {
             }
           )
         .then(()=>{
-            lib.broadcastLocation(
-                this.state.address,{
-                lng:this.state.latlng.longitude,
-                lat:this.state.latlng.latitude
-            })
         })
         .then(()=>{
             (this.props.onLocate)?
@@ -88,34 +84,30 @@ export default class Map extends React.Component {
     }
     
   render() {
+    const{ region,cluster,onLocate,locate,chefsLocation } = this.props
     return (
       <MapView
         provider = { MapView.PROVIDER_GOOGLE }
         style={[{ flex: 1 },{...this.props.style}]}
-        region={this.state.latlng}
-        customMapStyle = { this.props.cluster? mapStyleA:mapStyleB }
+        region={region}
+        customMapStyle = { cluster? mapStyleA:mapStyleB }
         //liteMode={true}
         //onRegionChange = {this.props.onLocate?this.props.onLocate(null):null}
-        mapPadding={{
-          left: 110,
-          right: 60,
-          top: 60,
-          bottom: 60
-        }}
+        mapPadding={{ top: 0, right: 0, bottom: 100, left: 0 }}
         //onRegionChangeComplete = {(e)=>console.log(e)}
-        onRegionChangeComplete = {this.props.onLocate? this.onRegChange:null}
-        showsUserLocation = {this.props.cluster? false: true}
+        onRegionChangeComplete = {onLocate? this.onRegChange:null}
+        showsUserLocation = {cluster? false: true}
         userLocationAnnotationTitle = {'Me'}
-        initialRegion = {this.state.latlng}
-        followsUserLocation = {true}
-        showsMyLocationButton = {true}
+        initialRegion = {region}
+        followsUserLocation = {locate?true:false}
+        showsMyLocationButton = {locate?true:false}
         //showsMyLocationButton ={{margin:20}}
-        showsPointsOfInterest = {true}
+        showsPointsOfInterest = {locate?true:false}
       > 
         {
-            (!this.props.locate)?
+            (!locate)?
                 <MapView.Marker
-                        coordinate={this.state.latlng}
+                        coordinate={region}
                         >
                         <Icon user={true}/>
                 </MapView.Marker>:
@@ -123,21 +115,15 @@ export default class Map extends React.Component {
         }
         
         
-        {(this.props.cluster)?[
-          { latitude: 6.554558,
-            longitude: 3.362342},
-          { latitude: 6.555677,
-            longitude: 3.360604},
-          { latitude: 6.556088584481325,
-            longitude: 3.362153358757496}
-        ].map((marker,key) => (
+        {(cluster && chefsLocation !==null)?
+        chefsLocation.map((result,key) => (
             <MapView.Marker
                 key={key}
-                coordinate={ marker }
-                title={'restaurant'}
-                description={'restaurant'}
+                coordinate={ result.region }
+                title={result.restaurant}
+                description={result.restaurant}
                 >
-                <Icon restaurant={'Bees Burger'}/>
+                <Icon restaurant={result.restaurant}/>
             </MapView.Marker>
             )):
             null

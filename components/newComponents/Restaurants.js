@@ -1,41 +1,52 @@
-import React,{Component} from 'react'
-import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput ,StyleSheet} from 'react-native'
-import {colors} from '../../styles/style'
-import Restaurant from './Restaurant' 
+import React, { Component } from "react";
+import { View, ScrollView } from "react-native";
+import Restaurant from "./Restaurant";
+import lib from "../../lib/lib";
 
-class Restaurants extends Component{
-    constructor(props){
-        super(props)
-        this.state={
-            key:0
-        }
-        this.onHandleSelect=this.onHandleSelect.bind(this)
-    }
+class Restaurants extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: 0
+    };
+    this.onHandleSelect = this.onHandleSelect.bind(this);
+  }
 
-    onHandleSelect(key){
-        this.setState({key},
-            ()=>console.log(key)
-        )
-    }
+  onHandleSelect(key, val) {
+    this.setState({ key }, () => {
+      lib.updatechefbycuisine(val);
+      this.props.navigation.navigate("yourchef");
+    });
+  }
 
-    render (){
-        return(
-            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
-            {[0,0,0,0,0].map((val,key)=>
-                <Restaurant evnt = {()=>this.onHandleSelect(key)}
-                            key = {key}
-                            active = {this.state.key}
-                            number = {key}
-                            rating = {3}
-                            name = {'Stacks And Racks'}
-                            cuisine = {'African'}
-                            dist = {0.5}
-                            img = {'https://res.cloudinary.com/bukka/image/upload/v1500853749/google:104487594240799301853/profile_image.jpg'} />
-            )  
-            }
-            </ScrollView>
-        )
-    }
+  render() {
+    const { chef, cuisine, fetching } = this.props;
+    return (
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        style={{ flex: 1 }}
+      >
+        {Object.keys(chef.chefAndCuisine).length &&
+        cuisine &&
+        chef.chefAndCuisine[cuisine]
+          ? chef.chefAndCuisine[cuisine].map((val, key) => (
+              <Restaurant
+                evnt={() => this.onHandleSelect(key, val)}
+                key={key}
+                active={this.state.key}
+                number={key}
+                rating={Math.trunc(val.rating_overall)}
+                name={val.username}
+                cuisine={lib.format(val.cuisine)}
+                dist={lib.roundUp(val.distance)}
+                img={val.profile_photo}
+              />
+            ))
+          : null}
+      </ScrollView>
+    );
+  }
 }
 
-export default Restaurants
+export default Restaurants;

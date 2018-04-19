@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 const Position =({location,evnt})=>(
     <TouchableOpacity   style={styles.container}
                         onPress={evnt}>
-        <Text style={styles.textLocation}>
+        <Text style={[styles.textLocation]} numberOfLines={1} >
             {location}
         </Text>
         <Text style={styles.textIcon}>
@@ -28,7 +28,8 @@ Position.propTypes={
 const styles = StyleSheet.create({
     container:{
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        flex:1
     },
     textLocation:{
         textAlign:'center',

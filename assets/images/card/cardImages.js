@@ -1,0 +1,1 @@
+export { default as hologram } from './hologram.png'

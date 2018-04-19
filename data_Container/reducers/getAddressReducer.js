@@ -1,6 +1,5 @@
 const initialstate={
-    lng:"",
-    lat:"",
+    region:{},
     Location:"",
     apartment:"",
     deliverynote:"",
@@ -10,13 +9,17 @@ const initialstate={
 
 const getaddress=(state=initialstate,action)=>{
     switch(action.type){
+        case 'FETCH_REGION':{
+            return{
+                ...state,
+                region:action.payload.region
+            }
+        }
         case 'FETCH_ADDRESS':{
             return{
                 ...state,
-                lng:action.payload.lng,
-                lat:action.payload.lat,
-                Location:action.payload.address,
-                Located:true,
+                Location:action.payload.Location,
+                Located:true
             }
         }
         case'APARTMENT':{

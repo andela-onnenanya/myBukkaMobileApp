@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import propTypes from "prop-types";
-import Img from "./Images";
-import lib from "../lib/lib";
-import rsc from "../lib/resources";
+import Img from "../Images";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { hologram } from "../../assets/images/card/cardImages";
 
-export default class CardComponent extends Component {
+export default class CardFlipSide extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,42 +49,51 @@ export default class CardComponent extends Component {
             alignItems: "center",
             marginBottom: 10
           }}
-        />
+        >
+          <View
+            style={{
+              flex: 1,
+              height: 40,
+              backgroundColor: "black",
+              marginLeft: -17,
+              marginRight: -17
+            }}
+          />
+        </View>
         <View
           style={{
             height: 50,
             flexDirection: "row",
-            justifyContent: "space-between",
             alignItems: "center",
             marginBottom: 10
           }}
         >
-          <View>
-            <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 8,
-                marginBottom: 5,
-                letterSpacing: 2
-              }}
-            >
-              CARD NUMBER
-            </Text>
-            <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 14,
-                fontWeight: "bold"
-              }}
-            >
-              {cardNumber || this.state.cardNumber}
-            </Text>
+          <View style={{ flex: 1, height: 40, backgroundColor: "white" }}>
+            <View style={{ backgroundColor: "rgba(255,255,0,.2)", flex: 1 }} />
+            <View style={{ backgroundColor: "rgba(128,0,128,.1)", flex: 1 }} />
+            <View style={{ backgroundColor: "rgba(255,255,0,.2)", flex: 1 }} />
+            <View style={{ backgroundColor: "rgba(128,0,128,.1)", flex: 1 }} />
+            <View style={{ backgroundColor: "rgba(255,255,0,.2)", flex: 1 }} />
+            <View style={{ backgroundColor: "rgba(128,0,128,.1)", flex: 1 }} />
           </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Img
-              style={{ width: 55.17, height: 40 }}
-              source={{ uri: rsc.cardicon }}
-            />
+          <View
+            style={{
+              width: 50,
+              height: 35,
+              backgroundColor: "white",
+              justifyContent: "center"
+            }}
+          >
+            <Text
+              style={{
+                color: "rgba(0,0,0,.8)",
+                fontSize: 14,
+                fontWeight: "bold",
+                alignSelf: "center"
+              }}
+            >
+              {CVC || this.state.CVC}
+            </Text>
           </View>
         </View>
         <View
@@ -96,29 +105,11 @@ export default class CardComponent extends Component {
           }}
         >
           <View>
-            <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 8,
-                marginBottom: 5,
-                letterSpacing: 2
-              }}
-            >
-              CARD HOLDER
-            </Text>
-            <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 14,
-                fontWeight: "bold"
-              }}
-            >
-              {cardHolder || this.state.cardHolder}
-            </Text>
+            <Img style={{ width: 55.17, height: 42 }} source={hologram} />
           </View>
           <View
             style={{
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               flexDirection: "row",
               minWidth: 100,
               paddingRight: 20
@@ -127,7 +118,7 @@ export default class CardComponent extends Component {
             <View>
               <Text
                 style={{
-                  color: "rgba(255,255,255,.8)",
+                  color: "rgba(255,255,255,0)",
                   fontSize: 8,
                   marginBottom: 5,
                   letterSpacing: 2
@@ -137,12 +128,33 @@ export default class CardComponent extends Component {
               </Text>
               <Text
                 style={{
-                  color: "rgba(255,255,255,.8)",
+                  color: "rgba(255,255,255,0)",
                   fontSize: 14,
                   fontWeight: "bold"
                 }}
               >
                 {expires || this.state.expires}
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  color: "rgba(255,255,255,0)",
+                  fontSize: 8,
+                  marginBottom: 5,
+                  letterSpacing: 2
+                }}
+              >
+                CVC
+              </Text>
+              <Text
+                style={{
+                  color: "rgba(255,255,255,0)",
+                  fontSize: 14,
+                  fontWeight: "bold"
+                }}
+              >
+                {CVC || this.state.CVC}
               </Text>
             </View>
           </View>
@@ -152,7 +164,7 @@ export default class CardComponent extends Component {
   }
 }
 
-CardComponent.propTypes = {
+CardFlipSide.propTypes = {
   cardNumber: propTypes.string,
   cardHolder: propTypes.string,
   expires: propTypes.string,

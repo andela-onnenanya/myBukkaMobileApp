@@ -1,45 +1,52 @@
-import React,{Component} from 'react'
-import {ScrollView,StyleSheet} from 'react-native'
-import {colors} from '../../styles/style'
-import propTypes from 'prop-types'
-import Category from './Category'
-import lib from '../../lib/lib'
+import React, { Component } from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import Category from "./Category";
+import lib from "../../lib/lib";
 
-export default class Categories extends Component{
-    constructor(props){
-        super(props)
-        this.state ={
-            key:0
-        }
-        this.onhandleSelect = this.onhandleSelect.bind(this)
-        }
+export default class Categories extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: -1
+    };
+    this.onhandleSelect = this.onhandleSelect.bind(this);
+  }
 
-        onhandleSelect(key){
-            this.setState({key},()=>console.log(key))
-        }
+  onhandleSelect(key, val) {
+    this.setState({ key }, () => this.props.click(val));
+  }
 
-        render (){
-            return(
-                <ScrollView style={[styles.cont]} 
-                                horizontal={true} 
-                                showsHorizontalScrollIndicator={false} >  
-                                {
-                                    ['continental','African','Italian','french','fast food'].map((val,key)=>
-                                    <Category number = {key}
-                                              active = {this.state.key}
-                                              key = {key}
-                                              evnt = {()=>this.onhandleSelect(key)}
-                                              categ = {lib.format(val)}/>
-                                )
-                                } 
-                </ScrollView>
-                
-            )
-        }
+  render() {
+    const { categ } = this.props;
+    return (
+      <ScrollView
+        style={[styles.cont]}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        <Category
+          number={-1}
+          active={this.state.key}
+          key={-1}
+          evnt={() => this.onhandleSelect(-1, "all")}
+          categ={lib.format("all")}
+        />
+        {categ.map((val, key) => (
+          <Category
+            number={key}
+            active={this.state.key}
+            key={key}
+            evnt={() => this.onhandleSelect(key, val)}
+            categ={lib.format(val)}
+          />
+        ))}
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    cont:{
-        flex:1
-    }
-})
+  cont: {
+    flex: 1
+  }
+});

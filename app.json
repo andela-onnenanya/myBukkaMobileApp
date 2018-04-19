@@ -1,6 +1,19 @@
 {
   "expo": {
-    "sdkVersion": "^25.0.0",
-    "orientation": "portrait"
+    "sdkVersion": "25.0.0",
+    "orientation": "portrait",
+    "name": "Bukka",
+    "icon": "./assets/other/bukka.png",
+    "version": "0.0.3",
+    "slug": "bukka",
+    "splash": {
+      "image": "./assets/other/mybukka.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.bukkainc.bukka"
+    },
+    "android": {
+      "package": "com.bukkainc.bukka"
+    }
   }
 }

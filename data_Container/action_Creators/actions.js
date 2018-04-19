@@ -71,10 +71,15 @@ export const reauthenticate=(_)=>({
 export const clear_card_error=()=>({
 	type:'CLEAR_CARD_ERROR'
 })
-//user location
-export const fetch_address=(add,latLng)=>({
+//user region
+export const fetch_region=(region)=>({
+	type:'FETCH_REGION',
+	payload:{region}
+})
+//user address
+export const fetch_address=(Location)=>({
 	type:'FETCH_ADDRESS',
-	payload:{address:add,lng:latLng.lng,lat:latLng.lat}
+	payload:{Location}
 })
 //fetch list of chefs
 export const fetch_chef=(_)=>({
@@ -129,4 +134,23 @@ export const order=(_)=>({
 export const cleartransaction=()=>({
 	type:'CLEAR_TRANSACTION',
 	payload:[]
+})
+
+//order history
+export const orderhistorypending=()=>({
+	type:'FETCH_ORDER_HISTORY_PENDING'
+})
+
+export const orderhistoryfulfilled=(payload)=>({
+	type:'FETCH_ORDER_HISTORY_FULFILLED',
+	payload
+})
+
+export const orderhistoryrejected=(payload)=>({
+	type:'FETCH_ORDER_HISTORY_REJECTED',
+	payload
+})
+
+export const signout=()=>({
+	type:'SIGN_OUT'
 })

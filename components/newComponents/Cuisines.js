@@ -1,40 +1,37 @@
-import React ,{Component}from 'react'
-import { View,Text,TouchableOpacity,Animated,Image,Easing,ScrollView,TextInput ,StyleSheet} from 'react-native'
-import {colors} from '../../styles/style'
-import * as Animatable from 'react-native-animatable'
-import Cuisine from './Cuisine'
+import React, { Component } from "react";
+import { View, Text, ScrollView } from "react-native";
+import Cuisine from "./Cuisine";
+import lib from "../../lib/lib";
 
-class Cuisines extends Component{
-    constructor(props){
-        super(props)
-        this.state={
-            key:0
-        }
-        this.onhandleClick=this.onhandleClick.bind(this)
-    }
-    onhandleClick(key){
-        this.setState({key},
-            ()=>console.log(key)
-        )
-    }
-    render(){
-        return (
-            <ScrollView showsHorizontalScrollIndicator={false}
-                        horizontal={true}> 
-                {
-                    [0,0,0,0,0].map((val,key)=>
-                    <Cuisine cui = {'home made'}
-                             evnt = {()=>this.onhandleClick(key)}
-                             key = {key}
-                             number = {key}
-                             active = {this.state.key}/>
-                )
-                }
-
-            </ScrollView>
-        )
-    }
+class Cuisines extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: 0
+    };
+    this.onhandleClick = this.onhandleClick.bind(this);
+  }
+  onhandleClick(key, val) {
+    this.setState({ key }, this.props.onChangeCuisine(val));
+  }
+  render() {
+    const { chefAndCuisine, fetching } = this.props;
+    return (
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+        {fetching
+          ? null
+          : Object.keys(chefAndCuisine).map((val, key) => (
+              <Cuisine
+                cui={lib.format(val)}
+                evnt={() => this.onhandleClick(key, val)}
+                key={key}
+                number={key}
+                active={this.state.key}
+              />
+            ))}
+      </ScrollView>
+    );
+  }
 }
 
-
-export default Cuisines 
+export default Cuisines;

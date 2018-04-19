@@ -1,7 +1,8 @@
 import React from 'react';
 import styles,{colors} from '../../styles/style'
 import * as Animatable from 'react-native-animatable'
-import { WaveIndicator } from 'react-native-indicators';
+import { WaveIndicator } from 'react-native-indicators'
+import lib from '../../lib/lib'
 
 export default class splashScreen extends React.Component {
   constructor(props){
@@ -9,18 +10,34 @@ export default class splashScreen extends React.Component {
     this.state={
       splash: true,
     }
+    
     this.set=this.set.bind(this)
+    this.switch=this.switch.bind(this)
   }
 
   set(val){
-    console.log(this.state)
     this.setState({ splash: false });
-    clearTimeout(val);
-    console.log(this.state)
+    //clearTimeout(val);
   }
-componentDidMount() {
-  let setter=setTimeout(()=>this.set(setter), 5000)
-}
+  componentDidMount() {
+    if(!this.props.screenProps.address.Located){
+      lib.getRegion()
+    }
+  }
+  switch(store){
+    store.user.isAuthenticated?
+    this.props.navigation.navigate('shop'):
+    this.props.navigation.navigate('signin')
+  }
+  componentWillReceiveProps(nextProps){
+    if(!this.props.screenProps.address.Located){
+    if(nextProps.screenProps.address.Location){
+          this.set()
+          this.switch(nextProps.screenProps)
+        //let setter = setTimeout(()=>{this.set(setter),this.switch(nextProps)}, 1000)
+    }
+  }
+  }
   
   render() {
     return (

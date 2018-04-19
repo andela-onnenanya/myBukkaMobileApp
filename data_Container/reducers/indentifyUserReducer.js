@@ -250,7 +250,9 @@ const identifyUser=(state=initialstate,action)=>{
 		}
 		case'FETCH_ORDER_HISTORY_PENDING':{
 			return{	...state,
-					fetching_orderhistory:true	}
+					fetched_orderhistory:false,
+					fetching_orderhistory:true,
+					orderhistory:[]	}
 			;
 		}
 		case'UPDATING_USER_INFORMATION_PENDING':{
@@ -270,6 +272,8 @@ const identifyUser=(state=initialstate,action)=>{
 		case'FETCH_ORDER_HISTORY_REJECTED':{
 			return{	...state,
 					fetching_orderhistory:false,
+					fetched_orderhistory:false,
+					orderhistory:[],
 					error:action.payload	}
 			
 		}
@@ -293,7 +297,7 @@ const identifyUser=(state=initialstate,action)=>{
 			return{	...state,
 					fetched_orderhistory:true,
 					fetching_orderhistory:false,
-					orderhistory:action.payload.data,
+					orderhistory:action.payload,
 					error:null	}
 			
 		}
