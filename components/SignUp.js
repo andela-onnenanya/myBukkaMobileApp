@@ -7,6 +7,7 @@ import lib from "../lib/lib";
 import rsc from "../lib/resources";
 import SignUpB from "./SignUpTwo";
 import SignUpA from "./SignUpOne";
+import Swiper from "react-native-swiper";
 
 class SignUp extends Component {
   constructor(props) {

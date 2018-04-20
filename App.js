@@ -2,6 +2,7 @@ import React from "react";
 import store from "./data_Container/store";
 import { Font } from "expo";
 import Start from "./components/navigator/Navigation";
+import { WebView } from "react-native";
 
 export default class App extends React.Component {
   constructor(props) {

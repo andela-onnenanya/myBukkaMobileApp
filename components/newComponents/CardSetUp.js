@@ -7,6 +7,7 @@ import Button from "../Button";
 import { colors } from "../../styles/style";
 import CardFlipSide from "./CardFlipSide";
 import * as Animatable from "react-native-animatable";
+import { WebView } from "react-native";
 
 class CardSetUp extends React.Component {
   constructor(props) {
@@ -102,7 +103,7 @@ class CardSetUp extends React.Component {
       fetching_addcard
     } = this.props.screenProps.user;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, position: "relative" }}>
         <View style={{ flex: 4, justifyContent: "center" }}>
           <View style={{ minWidth: 200, minHeight: 200 }}>
             {isCVC ? (
@@ -139,22 +140,29 @@ class CardSetUp extends React.Component {
         </View>
         <View style={{ flex: 1.5, justifyContent: "center" }}>
           {time_to_reauthenticate.is_time_to_reauthenticate ? (
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <CardDetail
-                width={250}
-                label={time_to_reauthenticate.response}
-                value={this.state.otp}
-                autoFocus={true}
-                onFocus={() => console.log("verifying")}
-                onSubmitEditing={() => console.log("verifying")}
-                refe={input => (this.verifyingText = input)}
-                evnt={otp => this.setState({ otp })}
-                keyboardType={"phone-pad"}
-              />
-            </ScrollView>
+            time_to_reauthenticate.response === "open_url" ? (
+              this.props.navigation.navigate("web", {
+                uri: time_to_reauthenticate.url,
+                back: this.props.navigation.goBack
+              })
+            ) : (
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                <CardDetail
+                  width={250}
+                  label={time_to_reauthenticate.response}
+                  value={this.state.otp}
+                  autoFocus={true}
+                  onFocus={() => console.log("verifying")}
+                  onSubmitEditing={() => console.log("verifying")}
+                  refe={input => (this.verifyingText = input)}
+                  evnt={otp => this.setState({ otp })}
+                  keyboardType={"phone-pad"}
+                />
+              </ScrollView>
+            )
           ) : (
             <ScrollView
               horizontal={true}

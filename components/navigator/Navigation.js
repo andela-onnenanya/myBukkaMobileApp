@@ -18,6 +18,7 @@ import CardSetUp from "../newComponents/CardSetUp";
 import Sidebar from "../newComponents/Sidebar";
 import Profile from "../newComponents/Profile";
 import Orderhistory from "../newComponents/OrderHistory";
+import MyWeb from "../newComponents/web";
 
 const SplashNavigation = StackNavigator({
   splash: {
@@ -106,6 +107,12 @@ const ShopNavigation = StackNavigator({
   },
   history: {
     screen: Orderhistory,
+    navigationOptions: {
+      header: false
+    }
+  },
+  web: {
+    screen: MyWeb,
     navigationOptions: {
       header: false
     }
