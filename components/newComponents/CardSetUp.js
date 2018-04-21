@@ -239,6 +239,7 @@ class CardSetUp extends React.Component {
               alignItems: "center"
             }}
           >
+            {this.myButton("Cancel", () => this.props.navigation.goBack())}
             {this.myButton("Next", () => this.secondText.focus())}
           </View>
         ) : isCardHolder ? (

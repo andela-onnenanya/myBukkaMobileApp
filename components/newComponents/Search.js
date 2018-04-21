@@ -60,8 +60,8 @@ export default class Search extends Component {
               alignItems: "center"
             }}
           >
-            <Icon
-              name="arrow-left"
+            <Icono
+              name="keyboard-backspace"
               size={25}
               color={colors.c}
               onPress={() => this.props.navigation.goBack()}

@@ -252,7 +252,8 @@ class CategoriesAndMenu extends Component {
           >
             <View style={{ flex: 0.8, justifyContent: "flex-end" }}>
               <Text style={{ fontFamily: "Comfortaa-Bold", fontSize: 17 }}>
-                Categories &bull; {chef.menuCategoriesKeys.length + 1}
+                {chef.yourChef.username} &bull;{" "}
+                {lib.roundUp(chef.yourChef.distance) + " km"}
               </Text>
             </View>
             {Object.keys(this.props.screenProps.chef.yourChef) ? (

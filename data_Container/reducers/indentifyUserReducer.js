@@ -66,6 +66,14 @@ const identifyUser = (state = initialstate, action) => {
         }
       };
     }
+    case "CLEAR_ORDERS": {
+      return {
+        ...state,
+        orderstatus_fetching: false,
+        orderstatus_fetched: false,
+        orderstatus: []
+      };
+    }
     case "CLEAR_CARD_ERROR": {
       return {
         ...state,

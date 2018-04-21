@@ -195,7 +195,7 @@ export default class MoreItemInfo extends React.Component {
 
     return (
       <View style={[styles.containerk, myStyle.parentCont]}>
-        <View style={[styles.containerl, myStyle.buttonCont]}>
+        <View style={[styles.containerl, myStyle.buttonCont, { top: 30 }]}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Icon name="close" size={25} color={colors.a} />
           </TouchableOpacity>

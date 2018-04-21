@@ -13,6 +13,7 @@ import Button from "./Button";
 import lib from "../lib/lib";
 import Icon from "react-native-vector-icons/Entypo";
 import CartItem from "./CartItem";
+import Back from "./newComponents/Back";
 
 class ProceedToCheckOut extends Component {
   constructor(props) {
@@ -35,10 +36,10 @@ class ProceedToCheckOut extends Component {
         style={{
           flex: 1,
           padding: 10,
-          paddingTop: 30,
           backgroundColor: "white"
         }}
       >
+        <Back navigate={this.props.navigation.goBack} />
         <ScrollView style={{ flex: 1 }}>
           {Object.keys(cart.cart).map((val, key) => (
             <CartItem
@@ -113,7 +114,7 @@ class ProceedToCheckOut extends Component {
                   { fontSize: 12, color: "rgba(0,0,0,.2)" }
                 ]}
               >
-                SUBTOTAL:
+                DELIVERY:
               </Text>
               <Text
                 style={[
@@ -121,7 +122,7 @@ class ProceedToCheckOut extends Component {
                   { fontSize: 12, color: "rgba(0,0,0,.2)" }
                 ]}
               >
-                {cart.total}
+                ₦{chef.yourChef.delivery_charge || "000"}.00
               </Text>
             </View>
             <View
@@ -138,7 +139,7 @@ class ProceedToCheckOut extends Component {
                   { fontSize: 12, color: "rgba(0,0,0,.2)" }
                 ]}
               >
-                DISCOUNT:
+                SUBTOTAL:
               </Text>
               <Text
                 style={[
@@ -146,7 +147,7 @@ class ProceedToCheckOut extends Component {
                   { fontSize: 12, color: "rgba(0,0,0,.2)" }
                 ]}
               >
-                ₦000
+                ₦{cart.total}
               </Text>
             </View>
             <View
@@ -161,7 +162,8 @@ class ProceedToCheckOut extends Component {
                 TOTAL
               </Text>
               <Text style={[myStyles.myTexta, { fontSize: 18, color: "#900" }]}>
-                ₦{cart.total}
+                ₦{parseInt(cart.total, 10) +
+                  parseInt(chef.yourChef.delivery_charge, 10)}.00
               </Text>
             </View>
             <View

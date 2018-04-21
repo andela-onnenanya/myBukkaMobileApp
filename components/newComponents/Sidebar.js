@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { colors } from "../../styles/style";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SidebarMenu from "./SidebarMenu";
@@ -34,7 +34,10 @@ const Sidebar = ({
     animation={switche ? "fadeInRightBig" : counter ? "fadeInLeftBig" : ""}
     ease={""}
   >
-    <View style={{ flex: 1, paddingTop: 29, zIndex: 2 }}>
+    <TouchableOpacity
+      style={{ flex: 1, paddingTop: 29, zIndex: 2 }}
+      onPress={menuEvnt}
+    >
       <Animatable.View
         style={[
           {
@@ -56,7 +59,7 @@ const Sidebar = ({
           show={!switche}
         />
       </Animatable.View>
-    </View>
+    </TouchableOpacity>
     <View style={{ flex: 3, zIndex: 2 }}>
       <View
         style={{

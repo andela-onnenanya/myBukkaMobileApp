@@ -6,6 +6,8 @@ import lib from "../lib/lib";
 import Card from "./Card";
 import CheckBox from "react-native-check-box";
 import ColorCard from "./ColorCard";
+import Back from "./newComponents/Back";
+import { colors } from "../styles/style";
 
 class Pay extends Component {
   constructor(props) {
@@ -39,8 +41,10 @@ class Pay extends Component {
   render() {
     const {
       orderstatus_fetching,
-      orderstatus_fetched
+      orderstatus_fetched,
+      lastCardDigits
     } = this.props.screenProps.user;
+    const { cart } = this.props.screenProps.cart;
     const { btn } = this.state;
     return (
       <View
@@ -51,22 +55,44 @@ class Pay extends Component {
           position: "relative"
         }}
       >
-        <View style={{ flex: 1.5, position: "relative", paddingTop: 20 }}>
-          <View style={{ flex: 1 }}>
-            <Card style={{ margin: 0, height: "90%", width: "85%" }} />
+        <Back navigate={this.props.navigation.goBack} color="#5CBC5C" />
+        <View style={{ flex: 1, position: "relative", paddingTop: 20 }}>
+          <View style={{ height: 230 }}>
+            <Card
+              style={{ margin: 0, height: "90%", width: "85%" }}
+              cardNumber={
+                lastCardDigits ? "XXXX-XXXX-XXXX-" + lastCardDigits : null
+              }
+            />
             <ColorCard />
           </View>
-          <View style={{ flex: 0.6 }} />
         </View>
+        <Text style={{ color: "rgba(0,0,0,0)" }}>-OR-</Text>
         <View
           style={{
             flex: 1,
             justifyContent: "space-between",
             alignItems: "center",
-            padding: 20
+            paddingTop: 30
           }}
         >
-          <Text style={{ color: "rgba(0,0,0,.2)" }}>-OR-</Text>
+          <Button
+            text="Add A New Card"
+            textColor={[{ color: "transparent" }]}
+            event={() => console.log("yh")}
+            button={[
+              {
+                backgroundColor: "transparent",
+                width: 135,
+                height: 27,
+                borderRadius: 5,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 0
+              }
+            ]}
+          />
           <Button
             text="Add A New Card"
             textColor={[{ color: "#000" }]}
@@ -91,48 +117,63 @@ class Pay extends Component {
               }
             ]}
           />
-          <View style={{ flexDirection: "row", marginBottom: 10 }}>
-            <CheckBox
-              style={{ borderColor: "#C4D1DC", flex: 1 }}
-              onClick={() => this.setState({ accept: !this.state.accept })}
-              isChecked={this.state.accept}
-              rightText="I accept the Terms and Conditions and have read the Privacy Policy"
-              checkBoxColor="#74D12D"
-              rightTextStyle={{ color: "#E0E0E0", fontSize: 8 }}
-            />
-          </View>
-
-          <Button
-            text={
-              orderstatus_fetching
-                ? "Contacting Chef"
-                : orderstatus_fetched
-                  ? "Pay"
-                  : btn
-            }
-            textColor={[{ color: "#fff" }]}
-            event={this.pay}
-            button={[
-              {
-                backgroundColor: "#5CBC5C",
-                padding: 10,
-                height: 35,
-                minWidth: 80,
-                borderRadius: 5,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: 0,
-                shadowColor: "#000000",
-                shadowRadius: 5,
-                shadowOpacity: 0.5,
-                shadowOffset: {
-                  width: 0,
-                  height: 1
-                }
+          {Object.keys(cart).length ? (
+            <Text style={{ color: "rgba(0,0,0,.2)" }}>-OR-</Text>
+          ) : null}
+          {Object.keys(cart).length ? (
+            <Button
+              text={
+                orderstatus_fetching
+                  ? "Contacting Chef"
+                  : orderstatus_fetched
+                    ? "Pay"
+                    : btn
               }
-            ]}
-          />
+              textColor={[{ color: "#fff" }]}
+              event={this.pay}
+              button={[
+                {
+                  backgroundColor: "#5CBC5C",
+                  padding: 10,
+                  height: 35,
+                  minWidth: 80,
+                  borderRadius: 5,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 0,
+                  shadowColor: "#000000",
+                  shadowRadius: 5,
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 0,
+                    height: 1
+                  }
+                }
+              ]}
+            />
+          ) : null}
+        </View>
+        <View style={{ flex: 1, justifyContent: "flex-end", margin: -10 }}>
+          <View
+            style={{
+              height: 50,
+              bottom: 0,
+              backgroundColor: "#5CBC5C",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Comfortaa-Bold",
+                fontSize: 12
+              }}
+            >
+              You will not be charged until your food is being delivered
+            </Text>
+          </View>
         </View>
         {orderstatus_fetched ? (
           <View
@@ -172,7 +213,10 @@ class Pay extends Component {
               <Button
                 text="Continue Shopping"
                 textColor={[{ color: "#5CBC5C", fontFamily: "Comfortaa-Bold" }]}
-                event={() => this.props.navigation.navigate("shop")}
+                event={() => {
+                  this.props.navigation.navigate("shop");
+                  lib.clearall();
+                }}
                 button={[
                   {
                     backgroundColor: "#F2F2F2",

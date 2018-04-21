@@ -9,7 +9,11 @@ import Dimensions from "Dimensions";
 const Cuisine = ({ cui, evnt, number, active }) => (
   <TouchableOpacity style={styles.container} onPress={evnt}>
     <Image
-      source={cuisineImages[lib.lowercaseAndJoin(cui)]}
+      source={
+        number === active
+          ? cuisineImages[lib.lowercaseAndJoin(cui) + "red"]
+          : cuisineImages[lib.lowercaseAndJoin(cui)]
+      }
       style={styles.imageStyle}
     />
     <Text
