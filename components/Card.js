@@ -4,6 +4,7 @@ import propTypes from "prop-types";
 import Img from "./Images";
 import lib from "../lib/lib";
 import rsc from "../lib/resources";
+import Dimensions from "Dimensions";
 
 export default class CardComponent extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ export default class CardComponent extends Component {
   }
   render() {
     const { cardNumber, cardHolder, expires, CVC } = this.props;
+    const wit = Dimensions.get("window").width;
     return (
       <View
         style={[
@@ -71,11 +73,14 @@ export default class CardComponent extends Component {
               CARD NUMBER
             </Text>
             <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 14,
-                fontWeight: "bold"
-              }}
+              style={[
+                {
+                  color: "rgba(255,255,255,.8)",
+                  fontSize: 14,
+                  fontWeight: "bold"
+                },
+                wit <= 320 ? { fontSize: 12 } : { fontSize: 14 }
+              ]}
             >
               {cardNumber || this.state.cardNumber}
             </Text>
@@ -107,11 +112,13 @@ export default class CardComponent extends Component {
               CARD HOLDER
             </Text>
             <Text
-              style={{
-                color: "rgba(255,255,255,.8)",
-                fontSize: 14,
-                fontWeight: "bold"
-              }}
+              style={[
+                {
+                  color: "rgba(255,255,255,.8)",
+                  fontWeight: "bold"
+                },
+                wit <= 320 ? { fontSize: 12 } : { fontSize: 14 }
+              ]}
             >
               {cardHolder || this.state.cardHolder}
             </Text>
@@ -136,11 +143,14 @@ export default class CardComponent extends Component {
                 EXPIRES
               </Text>
               <Text
-                style={{
-                  color: "rgba(255,255,255,.8)",
-                  fontSize: 14,
-                  fontWeight: "bold"
-                }}
+                style={[
+                  {
+                    color: "rgba(255,255,255,.8)",
+                    fontSize: 14,
+                    fontWeight: "bold"
+                  },
+                  wit <= 320 ? { fontSize: 12 } : { fontSize: 14 }
+                ]}
               >
                 {expires || this.state.expires}
               </Text>

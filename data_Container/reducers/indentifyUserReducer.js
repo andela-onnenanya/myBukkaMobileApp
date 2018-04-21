@@ -185,14 +185,17 @@ const identifyUser = (state = initialstate, action) => {
       return {
         ...state,
         time_to_reauthenticate: {
-          is_time_to_reauthenticate: action.payload.body.status,
-          response:
-            action.payload.body.data.display_text ||
-            action.payload.body.data.status,
-          reference: action.payload.body.data.reference,
-          url: action.payload.body.data.url || "",
-          error: "",
-          fetching: false
+          fetching: false,
+          is_time_to_reauthenticate: action.payload
+            ? action.payload.body.status
+            : false,
+          response: action.payload
+            ? action.payload.body.data.display_text ||
+              action.payload.body.data.status
+            : "",
+          reference: action.payload ? action.payload.body.data.reference : "",
+          url: action.payload ? action.payload.body.data.url : "",
+          error: ""
         }
       };
     }

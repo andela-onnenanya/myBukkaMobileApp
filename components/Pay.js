@@ -8,6 +8,7 @@ import CheckBox from "react-native-check-box";
 import ColorCard from "./ColorCard";
 import Back from "./newComponents/Back";
 import { colors } from "../styles/style";
+import Dimensions from "Dimensions";
 
 class Pay extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class Pay extends Component {
     } = this.props.screenProps.user;
     const { cart } = this.props.screenProps.cart;
     const { btn } = this.state;
+    const wit = Dimensions.get("window").width;
     return (
       <View
         style={{
@@ -55,7 +57,7 @@ class Pay extends Component {
       >
         <Back navigate={this.props.navigation.goBack} color="#5CBC5C" />
         <View style={{ flex: 1, position: "relative", paddingTop: 20 }}>
-          <View style={{ height: 230 }}>
+          <View style={wit <= 320 ? { height: 210 } : { height: 220 }}>
             <Card
               style={{ margin: 0, height: "90%", width: "85%" }}
               cardNumber={

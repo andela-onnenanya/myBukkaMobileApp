@@ -6,6 +6,9 @@ import SidebarMenu from "./SidebarMenu";
 import propTypes from "prop-types";
 import * as Animatable from "react-native-animatable";
 import HeaderMenu from "./HeaderMenu";
+import Dimensions from "Dimensions";
+
+const wit = Dimensions.get("window").width;
 
 const Sidebar = ({
   imageUrl,
@@ -96,27 +99,45 @@ const Sidebar = ({
           </Text>
         </View>
         <View
-          style={{
-            width: 100,
-            height: 100,
-            position: "absolute",
-            bottom: -50,
-            right: 25,
-            backgroundColor: "white",
-            zIndex: 2,
-            borderRadius: 50,
-            backgroundColor: "rgba(0,0,0,.1)",
-            borderColor: "white",
-            borderWidth: 2
-          }}
+          style={[
+            {
+              width: 100,
+              height: 100,
+              position: "absolute",
+              bottom: -50,
+              right: 25,
+              backgroundColor: "white",
+              zIndex: 2,
+              borderRadius: 50,
+              backgroundColor: "rgba(0,0,0,.1)",
+              borderColor: "white",
+              borderWidth: 2
+            },
+            wit <= 320
+              ? {
+                  width: 80,
+                  height: 80,
+                  borderRadius: 40
+                }
+              : {}
+          ]}
         >
           <Image
             source={{ uri: imageUrl }}
-            style={{
-              width: 98,
-              height: 98,
-              borderRadius: 49
-            }}
+            style={[
+              {
+                width: 98,
+                height: 98,
+                borderRadius: 49
+              },
+              wit <= 320
+                ? {
+                    width: 78,
+                    height: 78,
+                    borderRadius: 39
+                  }
+                : {}
+            ]}
           />
         </View>
       </View>
