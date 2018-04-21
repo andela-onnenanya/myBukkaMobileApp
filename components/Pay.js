@@ -27,7 +27,7 @@ class Pay extends Component {
         ? this.setState(
             { btn: "Checking Your Balance" },
             lib.checkBalance(
-              parseInt(this.props.screenProps.cart.total, 10),
+              parseInt(this.props.screenProps.cart.total, 10) * 100,
               this.props.navigation.goBack
             )
           )
