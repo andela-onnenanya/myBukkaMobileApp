@@ -20,9 +20,7 @@ class Pay extends Component {
   }
 
   pay() {
-    if (!this.state.accept) {
-      alert("You must accept our terms and conditions to proceed");
-    } else if (!this.props.screenProps.user.lastCardDigits) {
+    if (!this.props.screenProps.user.lastCardDigits) {
       this.props.navigation.navigate("addcard");
     } else {
       lib.amountofitems()

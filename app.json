@@ -4,7 +4,7 @@
     "orientation": "portrait",
     "name": "Bukka",
     "icon": "./assets/other/bukka.png",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "slug": "bukka",
     "splash": {
       "image": "./assets/other/mybukka.png"
