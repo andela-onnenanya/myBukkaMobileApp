@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView
+} from "react-native";
 import { colors } from "../../styles/style";
 import SidebarMenu from "./SidebarMenu";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -11,8 +18,8 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: lib.format(props.screenProps.user.user.first_name),
-      lastname: lib.format(props.screenProps.user.user.last_name),
+      first_name: lib.format(props.screenProps.user.user.first_name),
+      last_name: lib.format(props.screenProps.user.user.last_name),
       mobile: props.screenProps.user.user.mobile,
       editable: false
     };
@@ -24,7 +31,10 @@ export default class Profile extends Component {
     this.setState({ editable: true });
   }
   onSaveEdit() {
-    this.setState({ editable: false });
+    this.setState({ editable: false }, () => {
+      lib.updateuser({ ...this.state, editable: undefined }),
+        console.log(this.state);
+    });
   }
   onBasket() {
     !lib.amountofitems()
@@ -33,7 +43,7 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { lastname, mobile, firstname, editable } = this.state;
+    const { last_name, mobile, first_name, editable } = this.state;
     const { email, profile_photo } = this.props.screenProps.user.user;
     return (
       <View style={{ flex: 1, position: "relative" }}>
@@ -83,7 +93,12 @@ export default class Profile extends Component {
         </View>
         <View style={{ flex: 10, paddingLeft: "7%", paddingRight: "7%" }}>
           <View style={{ flex: 1, backgroundColor: colors.b }}>
-            <View style={{ flex: 1, zIndex: 1 }}>
+            <View
+              style={[
+                { flex: 1, zIndex: 1 },
+                editable ? { flex: 0, height: 20 } : {}
+              ]}
+            >
               <View
                 style={{
                   flex: 1,
@@ -93,16 +108,21 @@ export default class Profile extends Component {
                   zIndex: 1
                 }}
               >
-                <Image
-                  source={{ uri: profile_photo }}
-                  style={{
-                    width: Dimensions.get("window").height * 8 / 11 / 4,
-                    height: Dimensions.get("window").height * 8 / 11 / 4,
-                    borderRadius: Dimensions.get("window").height * 8 / 11 / 8,
-                    marginBottom: 5
-                  }}
-                />
-                <Text style={{ color: "rgba(0,0,0,.5)" }}>{email}</Text>
+                {editable ? null : (
+                  <Image
+                    source={{ uri: profile_photo }}
+                    style={{
+                      width: Dimensions.get("window").height * 8 / 11 / 4,
+                      height: Dimensions.get("window").height * 8 / 11 / 4,
+                      borderRadius:
+                        Dimensions.get("window").height * 8 / 11 / 8,
+                      marginBottom: 5
+                    }}
+                  />
+                )}
+                {editable ? null : (
+                  <Text style={{ color: "rgba(0,0,0,.5)" }}>{email}</Text>
+                )}
                 {editable ? (
                   <TouchableOpacity
                     style={{
@@ -144,8 +164,12 @@ export default class Profile extends Component {
                 )}
               </View>
             </View>
-            <View style={{ flex: 2, backgroundColor: colors.b }}>
-              <View
+            <KeyboardAvoidingView
+              style={{ flex: 2, backgroundColor: colors.b }}
+              behavior="padding"
+              enabled
+            >
+              <ScrollView
                 style={{
                   flex: 1,
                   paddingTop: 50,
@@ -160,12 +184,12 @@ export default class Profile extends Component {
                   }
                   label={"First Name"}
                   refe={input => (this.firstText = input)}
-                  value={firstname}
+                  value={first_name}
                   focus={editable ? true : false}
                   profile={editable ? false : true}
                   profileEdit={editable}
                   onSubmitEditing={() => this.secondText.focus()}
-                  evnt={firstname => this.setState({ firstname })}
+                  evnt={first_name => this.setState({ first_name })}
                 />
 
                 <CardDetail
@@ -175,11 +199,11 @@ export default class Profile extends Component {
                   }
                   label={"Last Name"}
                   refe={input => (this.secondText = input)}
-                  value={lastname}
+                  value={last_name}
                   profile={editable ? false : true}
                   profileEdit={editable}
                   onSubmitEditing={() => this.thirdText.focus()}
-                  evnt={lastname => this.setState({ lastname })}
+                  evnt={last_name => this.setState({ last_name })}
                 />
 
                 <CardDetail
@@ -195,8 +219,8 @@ export default class Profile extends Component {
                   onSubmitEditing={() => console.log("Yh!")}
                   evnt={mobile => this.setState({ mobile })}
                 />
-              </View>
-            </View>
+              </ScrollView>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </View>

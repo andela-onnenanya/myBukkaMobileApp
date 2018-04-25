@@ -63,6 +63,7 @@ class Input extends Component {
         )}
         <View style={[styles.Password__Input__Container, styles.input_holder]}>
           <TextInput
+            autoCorrect={false}
             placeholder={this.props.text}
             style={[
               styles.input,
@@ -118,6 +119,7 @@ class Input extends Component {
           />
         )}
         <TextInput
+          autoCorrect={false}
           placeholder={this.props.disc ? this.props.disc : this.props.text}
           style={[
             styles.input,

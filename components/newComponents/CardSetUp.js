@@ -90,7 +90,6 @@ class CardSetUp extends React.Component {
         MM;
       YY = expi.splice(expi.length - 2, 2).join("");
       MM = expi.join("");
-      console.log(YY, MM);
       lib.addcard(cardNumber, CVC, MM, YY);
     }
   }

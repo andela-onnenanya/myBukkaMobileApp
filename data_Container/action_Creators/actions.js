@@ -156,3 +156,8 @@ export const orderhistoryrejected = payload => ({
 export const signout = () => ({
   type: "SIGN_OUT"
 });
+//edit user detail
+export const edit_user = _ => ({
+  type: "EDIT_USER_INFO",
+  payload: _
+});

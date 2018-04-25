@@ -141,10 +141,10 @@ const identifyUser = (state = initialstate, action) => {
         },
         user: {
           ...state.user,
-          email: action.payload.data.email,
-          first_name: action.payload.data.first_name,
-          last_name: action.payload.data.last_name,
-          mobile: action.payload.data.mobile
+          email: action.payload.body.data.email,
+          first_name: action.payload.body.data.first_name,
+          last_name: action.payload.body.data.last_name,
+          mobile: action.payload.body.data.mobile
         }
       };
     }

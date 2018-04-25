@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView
+} from "react-native";
 import styles, { colors } from "../styles/style";
 import Button from "./Button";
 import Img from "./Images";
@@ -8,6 +13,7 @@ import rsc from "../lib/resources";
 import SignUpB from "./SignUpTwo";
 import SignUpA from "./SignUpOne";
 import Swiper from "react-native-swiper";
+import Dimensions from "Dimensions";
 
 class SignUp extends Component {
   constructor(props) {
@@ -71,44 +77,61 @@ class SignUp extends Component {
   }
 
   render() {
+    const wit = Dimensions.get("window").width;
     return (
       <View style={[styles.container, { backgroundColor: colors.a }]}>
-        <View style={{ flex: 1 }} />
+        <View style={{ flex: 6 }} behavior="padding" enabled>
+          {
+            //wit <= 320 ? null :
+            <View style={{ flex: 1 }} />
+          }
+          <View
+            style={[
+              {
+                flex: 5,
+                justifyContent: "space-between",
+                alignItems: "center"
+              },
+              wit <= 320 ? { flex: 7 } : { flex: 5 }
+            ]}
+          >
+            <Img
+              source={{ uri: rsc.logo }}
+              style={[{ width: 200, height: 75 }]}
+              onLoadStart={e => this.setState({ loading: true })}
+              onLoad={e => this.setState({ loading: false })}
+            />
+            <Swiper
+              activeDotColor="white"
+              index={1}
+              bounces={true}
+              loop={false}
+              onIndexChanged={index => console.log(index)}
+            >
+              <SignUpB
+                firstName={firstName => this.setState(() => ({ firstName }))}
+                lastName={lastName => this.setState(() => ({ lastName }))}
+                mobile={mobile => this.setState(() => ({ mobile }))}
+                value={this.state}
+              />
+              <SignUpA
+                email={email => this.setState(() => ({ email }))}
+                password={password => this.setState(() => ({ password }))}
+                repeatPassword={repeatPassword =>
+                  this.setState(() => ({ repeatPassword }))
+                }
+                value={this.state}
+              />
+            </Swiper>
+          </View>
+        </View>
         <View
           style={{
-            flex: 5,
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "center",
+            flex: 1
           }}
         >
-          <Img
-            source={{ uri: rsc.logo }}
-            style={[{ width: 200, height: 75 }]}
-            onLoadStart={e => this.setState({ loading: true })}
-            onLoad={e => this.setState({ loading: false })}
-          />
-          <Swiper
-            activeDotColor="white"
-            index={1}
-            bounces={true}
-            loop={false}
-            onIndexChanged={index => console.log(index)}
-          >
-            <SignUpA
-              email={email => this.setState(() => ({ email }))}
-              password={password => this.setState(() => ({ password }))}
-              repeatPassword={repeatPassword =>
-                this.setState(() => ({ repeatPassword }))
-              }
-              value={this.state}
-            />
-            <SignUpB
-              firstName={firstName => this.setState(() => ({ firstName }))}
-              lastName={lastName => this.setState(() => ({ lastName }))}
-              mobile={mobile => this.setState(() => ({ mobile }))}
-              value={this.state}
-            />
-          </Swiper>
           {this.props.screenProps.signup.fetching ? (
             <Button
               text="Creating Account..."

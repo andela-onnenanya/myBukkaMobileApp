@@ -249,6 +249,7 @@ export default class MoreItemInfo extends React.Component {
                   deco={[styles.textg, myStyle.myText]}
                 />
                 <TextInput
+                  autoCorrect={false}
                   style={[styles.textInputa, myStyle.myText]}
                   onFocus={() => this.setState({ typing: true })}
                   onBlur={() => this.setState({ typing: false })}
